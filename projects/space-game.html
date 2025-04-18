@@ -1,7 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+
 <body>
     <h1> HELLO!</h1>
+    <pre style="width: 40%;">
+        <code class="language-java">
+        public void move(float dt, ControlType ct, PApplet p) {
+                switch (ct) {
+                    case POSITION:
+                        break;
+
+                    case VELOCITY:
+                        vel.add(acc.mult(dt));
+                        pos.add(PVector.mult(vel, dt));
+                        // acc.mult(0);
+                        break;
+
+                    case FORCE:
+                        force(dt, p); 
+                        break;
+                }
+            }
+        </code>
+    </pre>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- Initialize highlight.js -->
+    <script>hljs.highlightAll();</script>
 </body>
 <!--On main page change to here by doing  <a href="projects/space-game.html" -->
+
 </html>
