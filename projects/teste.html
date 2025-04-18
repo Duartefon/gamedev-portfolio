@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Name | Your Name Game Dev Portfolio</title>
+    <link rel="stylesheet" href="project-style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Project Name</h1>
+        <p>A brief tagline about your project</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">All Projects</a></li>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#challenges">Challenges</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section class="project-hero">
+            <div class="project-hero-image">
+                <img src="../images/mssn/mssn_portfolio.GIF" alt="Project Name Screenshot">
+            </div>
+
+            <div class="project-hero-details">
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <h3>Role</h3>
+                        <p>Lead Developer/Programmer, Designer</p>
+                    </div>
+                    <div class="meta-item">
+                        <h3>Engine/Tools</h3>
+                        <p>Java and Processing</p>
+                    </div>
+                    <div class="meta-item">
+                        <h3>Duration</h3>
+                        <p>1 month</p>
+                    </div>
+                    <div class="meta-item">
+                        <h3>Team Size</h3>
+                        <p>Only me - Solo project for university</p>
+                    </div>
+                </div>
+
+                <div class="project-links">
+                    <a href="#" target="_blank">View Source</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview" class="section">
+            <h2>Project Overview</h2>
+            <p> This game was the final project for the course Modelation and Simulation of Natural Systems.
+                Throughout the course I've learned many topics such as Physics Simulation, Particle Systems,
+                Autonomous Agents, Cellular Automata and Fractals.
+                The systems I ended up implementing into my game were: </p>
+            <ul class="custom-list">
+                <li>Physics Simulation</li>
+                <li>Autonomous angents and Boids</li>
+                <li>Particle System</li>
+                <li>Procedural Generation: Cellular Automata </li>
+            </ul>
+            <p> You'll be able to learn how I developed these systems in much more detail in the next section!</p>
+        </section>
+
+        <section id="features" class="section">
+            <h2>Key Systems</h2>
+
+
+            <div class="features-list">
+                <div class="feature-card">
+                    <h3>Physics Simulation</h3>
+                    <p>Describe a unique game mechanic you implemented and how it enhances gameplay.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Boids</h3>
+                    <p>Explain your art direction choices and how they contribute to the game's atmosphere.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Particle System</h3>
+                    <p>Highlight any technical challenges you overcame or impressive systems you built.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Cellular Automata</h3>
+                    <p>Describe the intended emotional journey or experience for players.</p>
+                </div>
+            </div>
+        </section>
+
+        <!--  <section id="gallery" class="section">
+            <h2>Gallery</h2>
+            <p>Showcase screenshots, concept art, or other visual assets from your project.</p>
+
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="screenshot1.jpg" alt="Gameplay screenshot 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="screenshot2.jpg" alt="Gameplay screenshot 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="concept-art1.jpg" alt="Concept art 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="screenshot3.jpg" alt="Gameplay screenshot 3">
+                </div>
+            </div>
+        </section>-->
+        <section id="Physics Simulation" class="section">
+
+
+            <h2>Physics Simulation</h2>
+            <h2>The Body</h2>
+            <p> Before we can have physics in a game we need a way to represent our "things" or our "objects" like the
+                player, enemy, etc, in the simulated physical world of our game.
+                with that in mind I implemented a RigidBody that will represent all the entities that move in my game:
+                the player, the enemy and even projectiles.
+            </p>
+
+            <input type="checkbox" id="collapsible-toggle" class="collapsible-toggle">
+            <label for="collapsible-toggle" class="collapsible-btn">Toggle Content</label>
+            <div class="collapsible-content">
+              <div class="content-inner">
+                <img src="../images/Captura de ecrã de 2025-04-18 01-02-35.png" alt="">
+                <p>Your content here</p>
+              </div>
+            </div>
+
+
+
+
+
+        </section>
+
+        <section id="challenges" class="section">
+            <h2>Development Challenges</h2>
+            <p>The first problem was that I had to implement those systems from scratch which can be overwhelming. On
+                top of that we were required to use the Processing library with java which is not a tool designed to
+                make games. However despite this hurdles I sucessfuly implemented the before mentioned systems</p>
+
+            <p>For each challenge, consider using this structure:</p>
+            <ul class="custom-list">
+                <li><strong>The problem:</strong> Clearly state what the challenge was</li>
+                <li><strong>Your approach:</strong> Explain how you tackled the problem</li>
+                <li><strong>The solution:</strong> Describe the working solution you implemented</li>
+                <li><strong>Lessons learned:</strong> Share what you took away from the experience</li>
+            </ul>
+            <p>This section is particularly valuable to potential employers or collaborators as it shows your technical
+                and creative thinking process.</p>
+        </section>
+
+        <section id="reflection" class="section">
+            <h2>Personal Reflection</h2>
+            <p>Share what you learned from this project and how it contributed to your growth as a game developer. You
+                might discuss:</p>
+            <ul class="custom-list">
+                <li>New skills you acquired</li>
+                <li>What you would do differently next time</li>
+                <li>How this project influenced your approach to game development</li>
+                <li>Future plans for this project (if applicable)</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 Your Name. All rights reserved.</p>
+        <p>Your Game Development Portfolio</p>
+        <div class="social-links">
+            <a href="#" target="_blank">Twitter</a>
+            <a href="#" target="_blank">GitHub</a>
+            <a href="#" target="_blank">LinkedIn</a>
+            <a href="#" target="_blank">Itch.io</a>
+        </div>
+    </footer>
+</body>
+
+</html>
