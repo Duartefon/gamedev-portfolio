@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Name | Your Name Game Dev Portfolio</title>
     <link rel="stylesheet" href="project-style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+    <!-- Prism.js theme with Solarized Light -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-solarizedlight.min.css"
+        rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
 </head>
@@ -324,11 +326,12 @@
                     </p>
                     <ul class="custom-list">
                         <li>Enemy class - holds the data of the enemy itself </li>
-                        <li>Behaviour - any boid behaviour extends this class that itself implements IBehaviour  </li>
+                        <li>Behaviour - any boid behaviour extends this class that itself implements IBehaviour </li>
                         <li>DNA - defines the possible values for the boid like maxSpeed and maxForce</li>
-                        <li>Eye - class that enables the boid to "see" the world<li>
-                        <li>RigidBody - class already explained in the previous section, it represents the body of the boid</li>
-                    </ul>
+                        <li>Eye - class that enables the boid to "see" the world</li>
+                        <li>RigidBody - class already explained in the previous section, it represents the body of the
+                            boid</li>
+                    </ul><br>
 
 
                     <div class="center-img">
@@ -336,6 +339,238 @@
                     </div>
                 </div>
             </div>
+
+            <input type="checkbox" id="collapsible-toggle_4" class="collapsible-toggle">
+            <label for="collapsible-toggle_4" class="collapsible-btn">Boid Code</label>
+            <div class="collapsible-content">
+                <div class="content-inner">
+                    <h1>Seek Behaviour</h1>
+                    <p>When the player enters the boid vision, the boids position and the player will be substracted,
+                        creating the seek vector </p>
+                    <div class="center-img">
+                        <img src="../images/mssn/mod/boidSeek.png">
+                    </div>
+                    <pre><code class="language-java">
+@Override
+public PVector getDesiredVelocity(Boid me) {
+    RigidBody bodyTarget = me.eye.target;
+    if (me.getEye().inSight(me.eye.target.getWorldPosition(), me.dna.getVisionDistance(), me.dna.getVisionAngle()))
+        return PVector.sub(bodyTarget.getScreenPosition(), me.getScreenPosition());
+    else
+        return new PVector();
+}
+                    </code>
+                    </pre>
+                    <br>
+                    <h1> Wander Behaviour</h1>
+                    <p> The wander behaviour lets the boid wander through the map when a target (the player) is not in
+                        it's vision. Given a wanderRadius, the boid "selects" a random point. Give that random point it
+                        calculates the distance between itself and that point and then goes to that point. The following
+                        diagram examplifies this:</p>
+
+                    <!--TODO ADICIONAR Wonder 
+                    <div class="center-img">
+                        <img display="center" src=../images/mssn/mod/enemy.png>
+                    </div>-->
+
+                    <pre><code class="language-java">
+@Override
+public PVector getDesiredVelocity(Boid me) {
+    PVector center = me.getWorldPosition();
+    center.add(me.getVelocity().mult(me.dna.getDeltaTWander()));
+    
+    float x = me.dna.getRadiusWander() * (float) Math.cos(me.phiWander);
+    float y = me.dna.getRadiusWander() * (float) Math.sin(me.phiWander);
+    PVector target = new PVector(x,y);
+    target.add(center);
+    me.phiWander += 2 *  (Math.random()-0.5 ) * me.dna.getDeltaPhiWander();
+    return PVector.sub(target, me.getWorldPosition());
+}
+                </code>
+            </pre>
+                </div>
+            </div>
+
+
+        </section>
+
+        <section id="particle-system" class="section">
+            <h2>Particle System</h2>
+            <p> In this game I used a particle system to simulate the exhaust coming from the ship. To achieve this,
+                after implemeting the particle system itself, I added it to
+                the end of the ship and made sure the way the exhaust moves is the same as the player. Therefore the
+                exhaust will always keep its relative position to the ship, the same. It was also fun to learn that
+                William T. Reeves of LucasFilm was the creator of the particle systems, with the iconic "Genesis Effect"
+            </p>
+            <input type="checkbox" id="collapsible-toggle_5" class="collapsible-toggle">
+            <label for="collapsible-toggle_5" class="collapsible-btn">Particle System Diagram</label>
+            <div class="collapsible-content">
+                <div class="content-inner">
+
+                    <p>To understand a particle system it's important to understand the key differences between the
+                        particles generated by the Particle System and the Particle System itself. A particle system is
+                        something that has mass and can move through the virtual space and interact with this virtual
+                        world. However the particles itself
+                        don't have mass and don't interact with the world outside the system. Therefore the particles
+                        live and die by the system. The following diagram is the uml of the particle system that was
+                        implemented. To be noted that even tho it's not in the uml, the particle system class extends
+                        the class rigidBody</p>
+                    <div class="center-img">
+                        <img display="center" src="../images/mssn/mod/particleSystem.png">
+                    </div>
+
+
+                </div>
+            </div>
+
+            <input type="checkbox" id="collapsible-toggle_6" class="collapsible-toggle">
+            <label for="collapsible-toggle_6" class="collapsible-btn">Particle System Code</label>
+            <div class="collapsible-content">
+                <div class="content-inner">
+                    <h1>Adding Particles</h1>
+                    <p> Depending on the frameRate more or less particles will be added. This means that for computers
+                        that are slower and therefore have lower framerates will have less particles added per
+                        frame</p>
+                    <pre><code class="language-java">
+    private void addParticles(float dt) {
+        float particlesPerFrame = psc.getFlow() * dt; // flow -> particulas por segundo
+        int n = (int) particlesPerFrame;
+        float f = particlesPerFrame - n;
+
+        for (int i = 0; i < n; i++)
+            addOneParticle();
+        if (Math.random() < f)
+            addOneParticle();
+    }
+    private void addOneParticle() {
+
+        if (particles.size() < maxParticles) {
+
+            Particle particle = new Particle(pos, psc.getRndVel(), psc.getRndRadius(),
+                    psc.getRndLifetime(), psc.getColour());
+            particles.add(particle);
+        } else
+            return;
+    }
+</pre></code>
+                    <h1> Executing the particle System</h1>
+                    <p> After a while the particles will be queued to be deleted. New particles are only added if the
+                        particles list has space for it</p>
+                    <pre><code class = "language-java">
+    public void run(float dt, PApplet pa) { // as par
+
+        super.move(dt, ControlType.FORCE, pa);
+        if (isMoving)
+            addParticles(dt);
+        for (int i = particles.size() - 1; i >= 0; i--) {
+            Particle p = particles.get(i);
+            p.move(dt, ControlType.VELOCITY, pa);
+            if (p.isDead()) {
+    
+                particles.remove(i);
+            }
+        }
+    
+    }
+</code>
+</pre>
+
+
+
+                </div>
+
+            </div>
+            <input type="checkbox" id="collapsible-toggle_7" class="collapsible-toggle">
+            <label for="collapsible-toggle_7" class="collapsible-btn">Particle Class</label>
+            <div class="collapsible-content">
+                <div class="content-inner">
+                    <h1>Adding Particles</h1>
+                    <p> The particle itself is not very complex. Using processing graphical capabilities I decided to
+                        draw circles with random colors ranging from dark red to bright orange, to simulate fire
+                        produced by an exhaust. To note that it's possible to use sprites to represent the particles
+                    </p>
+                    <pre><code class="language-java">
+public class Particle extends RigidBody {
+    private float lifespan;
+    private float timer;
+    private int[] colour;
+
+    protected Particle(PVector pos, PVector vel, int radius, float lifespan, int[] colour) {
+        super(pos, vel, 0f, radius);
+        this.colour = Arrays.copyOf(colour, colour.length);
+        this.lifespan = lifespan;
+        timer = 0;
+    }
+
+    @Override
+    public void move(float dt, ControlType ct, PApplet p) {
+        super.move(dt, ControlType.VELOCITY, p);
+        timer += dt;
+    }
+
+    public boolean isDead() {
+        return timer > lifespan;
+    }
+
+    @Override
+    public void display(PApplet p) {
+
+        p.pushStyle();
+        float alpha = PApplet.map(timer, 0, lifespan, 255, 0);
+
+        p.fill(getRnd(100, colour[0]), getRnd(10, colour[1]), colour[2], alpha);
+
+        p.noStroke();
+        p.circle(pos.x, pos.y, radius * PApplet.PI);
+        p.popStyle();
+
+    }
+
+    public static int getRnd(int min, int max) {
+        return min + (int) (Math.random() * (max - min));
+    }
+
+    @Override
+    protected void force(float dt, PApplet p) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'force'");
+    }
+    }</pre></code>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="cellular" class="section">
+            <h2>Cellular Automata</h2>
+            <p> In a future where this game development was finished, this game would be a roguelike. I'm a very big fan
+                of the genre and how it can provide many upon many hours of content through techniques like procedural
+                generation. In the present, the only procedural generation in this game is the map through the use of
+                cellular automata.
+                This <a
+                    href="https://bronsonzgeb.com/index.php/2022/01/30/procedural-generation-with-cellular-automata/">blog</a>
+                helped me understand the use of automata to create cave-like maps. The cells that stayed alive after n
+                generations represent the rocks and the dead cells represent empty space that can be navigated through
+            </p>
+
+            <input type="checkbox" id="collapsible-toggle_8" class="collapsible-toggle">
+            <label for="collapsible-toggle_8" class="collapsible-btn">Cellular Automata Diagram</label>
+            <div class="collapsible-content">
+                <div class="content-inner">
+                    <p>The level generation system was divided in 3 parts 
+                         </p>
+                         <ul class="custom-list">
+                            <li><strong>The Map</strong> that represents the generated map</li>
+                            <li><strong>The CellularAutomataGenerator:</strong> the generator that creates the map through cellular automata</li>
+                            <li><strong>The cell:</strong> The class that models an individual cell</li>
+ 
+                        </ul>
+                        This 3 parts are represented in the following uml:
+                        <img src="../images/mssn/mod/"
+
+                </div>
+            </div>
+
 
         </section>
 
