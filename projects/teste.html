@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Name | Your Name Game Dev Portfolio</title>
     <link rel="stylesheet" href="project-style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
 </head>
 
 <body>
@@ -27,6 +30,7 @@
 
     <main class="container">
         <section class="project-hero">
+
             <div class="project-hero-image">
                 <img src="../images/mssn/mssn_portfolio.GIF" alt="Project Name Screenshot">
             </div>
@@ -122,24 +126,228 @@
             <h2>The Body</h2>
             <p> Before we can have physics in a game we need a way to represent our "things" or our "objects" like the
                 player, enemy, etc, in the simulated physical world of our game.
-                with that in mind I implemented a RigidBody that will represent all the entities that move in my game:
+                With that in mind I implemented a RigidBody that will represent all the entities that move in my game:
                 the player, the enemy and even projectiles.
             </p>
 
-            <input type="checkbox" id="collapsible-toggle" class="collapsible-toggle">
-            <label for="collapsible-toggle" class="collapsible-btn">Toggle Content</label>
+            <input type="checkbox" id="collapsible-toggle_1" class="collapsible-toggle">
+            <label for="collapsible-toggle_1" class="collapsible-btn">RigidBody Diagram</label>
             <div class="collapsible-content">
-              <div class="content-inner">
-                <img src="../images/Captura de ecrã de 2025-04-18 01-02-35.png" alt="">
-                <p>Your content here</p>
-              </div>
+                <div class="content-inner">
+                    <section class="wrapper">
+                        <div class="left">
+                            <p>A rigid body means that it will not be possible to deform the body, in other words, the
+                                distance between any points of a given body stays the same no matter what forces are
+                                applied to it. However, the body can move throughout space when forces are applied to
+                                it. In this game both friction and velocities are simulated by the rigidBody.
+                                For this to be possible we need the following vectors: </p>
+                            <ul class="custom-list">
+                                <li>Position Vector with x and y coordinates to represent it's position in space</li>
+                                <li>2d Velocity Vector</li>
+                                <li>2d Acceleration Vector </li>
+                                <li>A method to apply force to the body once</li>
+                                <li>A method to simulate all forces applied to the body</li>
+                            </ul>
+
+                        </div>
+                        <div class="right"><img display="center" src="../images/mssn/mod/rigidBody.png" alt=""></div>
+
+                    </section>
+                    <p>Now that we have a way to represent our body in the virtual world we need a way to be able to,
+                        move it move it, through it. In the next diagram you can see how the movement was planned out:
+                    </p>
+                    <div class="center-img">
+                        <img src="../images/mssn/mod/stockflow_en.png" class=center-img>
+
+                    </div>
+                </div>
+            </div>
             </div>
 
+            <!-- Collapsible 2 (Unique ID: "collapsible2") -->
+            <input type="checkbox" id="collapsible-toggle_2" class="collapsible-toggle">
+            <label for="collapsible-toggle_2" class="collapsible-btn">RigidBody Code</label>
+            <div class="collapsible-content">
+                <div class="content-inner">
+                    <br>
+                    <h1> The RigidBody</h1>
+                    <p> The RigidBody class has 3 types of movement that each children can use: </p>
+                    <ul class="custom-list">
+                        <li> <strong>Position </strong> - case Position where the Vector Position is directly acessed
+                            and altered, equivalent to teleportation</li>
+                        <li> <strong> Velocity</strong> - generic case where the body has velocity and acceleration</li>
+                        <li> <strong> Force </strong> - where each instance of a RigidBody can override the main way of
+                            moving</li>
+                    </ul>
+
+                    <p> The following code represents the types of movement mentioned in the class RigidBody:</p>
+
+                    <pre><code class="language-java">       public void move(float dt, ControlType ct, PApplet p) {
+            switch (ct) {
+                    case POSITION:
+                        break; //not useful for this game
+                                
+                    case VELOCITY:
+                        vel.add(acc.mult(dt));
+                        pos.add(PVector.mult(vel, dt));
+                        // acc.mult(0);
+                        break;
+                
+                    case FORCE:
+                        force(dt, p); // each child (extends) of RididBody will have different ways of moving
+                        break; // player is different from enemy for example
+                    }
+                }
+
+        protected abstract void force(float dt, PApplet p); 
+                
+                        </code></pre>
+                    <br>
+                    <h1> Movement Implementation</h1>
+                    <p> The classes that will extend rigidBody will either use the Velocity type of
+                        movement, like particle systems, and classes like the player will override the force method to
+                        implement its own way of moving. You can see this in the following code, that is the
+                        implementation of the stock and flow diagram:</p>
+
+                    <pre><code class="language-java">     protected void force(float dt, PApplet p) {
+            PVector frictionForce = PVector.mult(vel, -frictionCoeff);
+            displayVectors(p, d, frictionForce, 255, 255, 255);
+        
+            vel.add(frictionForce);
+            pos.add(PVector.mult(vel, dt));
+            vel.add(PVector.mult(acc, dt));
+    
+            PVector newForce = PVector.mult(desiredDir(), speed * accelerationBoost);
+            displayVectors(p, d, getDesiredDir(), 0, 255, 0);
+    
+            // Apply logarithmic acceleration decay based on current speed
+            float speedFactor = 1.5f - PApplet.map(vel.mag(), 0, maxSpeed, 0, 1);
+            newForce.mult(speedFactor);
+    
+            displayVectors(p, d, vel, 0, 0, 255);
+    
+            applyForce(newForce);
+    
+            vel.limit(maxSpeed);
+            protected abstract void force(float dt, PApplet p); 
+            }    
+                                        </code></pre>
+                    <br><br>
+                    <p> The inspiration for the movement was source based games where when you press a desired key,
+                        you'll have your movement incrementally added up until you reach the desired direction, instead
+                        of
+                        being instantaneous. The current velocity keeps being added a new force until it reaches the new
+                        direction vector, which is calculated depending on the input of the player:</p>
+                    <br>
+                    <div class="center-img">
+                        <img display="center" src=../images/mssn/mod/player_force.png>
+                    </div>
+                    <br>
+
+                    <p> The enemy for example is an Autonomous Agent, and it's movement will be similar to the player,
+                        however the way the wished direction vector is calculated depends on the behaviour that the
+                        agent is using. In this game the boid uses 2 behaviours - wander and seek, which will be
+                        explained in greater detail in the Boid section. The following is the force function of the boid
+                        class:</p>
+                    <br>
+                    <pre><code class = "language-java">
+            @Override
+            public void force(float dt, PApplet p) {
+                PVector vd = applyBehaviours(dt, p).copy(); // this line is different
+                
+                PVector frictionForce = PVector.mult(vel, -frictionCoeff);
+                
+                vel.add(frictionForce);
+                pos.add(PVector.mult(vel, dt));
+                vel.add(PVector.mult(vd, dt)); //here the paramater vd is different, in player it uses ac
+            
+                float speedFactor = 1.5f - PApplet.map(vel.mag(), 0, maxSpeed, 0, 1);
+                PVector newForce = PVector.mult(vd, speed * accelerationBoost);
+                newForce.mult(speedFactor);
+            
+                applyForce(newForce);
+                vel.limit(maxSpeed);
+            }
+            
+     </code></pre>
+
+                    <p> In retrospective, the common functionaly in the force method, between the player and enemy
+                        classes, could be
+                        refactored into it's own method in the rigidBody class. Only the directional vector is
+                        calculated differently and
+                        could've been passed as a parameter, to reduce repeated code with the same functionality </p>
+                    <br>
+                    <h1> Bullet </h1>
+                    <p> The Bullet class also implements it's own force method, since once it's been shot I wanted the
+                        bullet to move in a straight line, keeping the direction at the moment it was shot. The
+                        following
+                        code implements this:
+
+                    </p>
+                    <pre><code class="language-java">
+            @Override
+            protected void force(float dt, PApplet p) {
+                pos.x += speed * dirx;
+                pos.y += speed * diry;
+        
+            }</code></pre>
+                    <br>
+                    <h1> Particle System</h1>
+                    <p> The particle System has the same movement as the player but the particles, use the
+                        Velocity movement case of the rigidBody. And with that all entities that use the class RigidBody
+                        have
+                        it's movement implemented!</p>
+                </div>
+            </div>
+        </section>
+        <section id="boids" class="section">
+
+            <h2>Autonomous Agent - Boid</h2>
+            <h2>The Boid</h2>
+            Boids are a form of autonomous agents that can be though of as a small robot that will respond directly to
+            any stimuli its sensors give it without processing it.
+            A boid can have many behaviours and through this course I implemented many but in my game I only ended up
+            using two: <strong> Seek</strong> and <strong>Wander</strong>
+
+            </p>
+
+            <input type="checkbox" id="collapsible-toggle_3" class="collapsible-toggle">
+            <label for="collapsible-toggle_3" class="collapsible-btn">Boid Diagram</label>
+            <div class="collapsible-content">
+                <div class="content-inner">
 
 
+                    <p>The boid was used to be the fundamental "inteligence" of the enemy. The enemy will randomly
+                        explore the map through the virtual world and if it spots the player it will start seeking it.
+                        In the diagram provided it examplifies how the enemy is structured, however in this section only
+                        the boid class will be focused on. The different that combined make the enemy are:
+                    </p>
+                    <ul class="custom-list">
+                        <li>Enemy class - holds the data of the enemy itself </li>
+                        <li>Behaviour - any boid behaviour extends this class that itself implements IBehaviour  </li>
+                        <li>DNA - defines the possible values for the boid like maxSpeed and maxForce</li>
+                        <li>Eye - class that enables the boid to "see" the world<li>
+                        <li>RigidBody - class already explained in the previous section, it represents the body of the boid</li>
+                    </ul>
 
+
+                    <div class="center-img">
+                        <img display="center" src=../images/mssn/mod/enemy.png>
+                    </div>
+                </div>
+            </div>
 
         </section>
+
+
+
+
+
+
+
+
+
+
 
         <section id="challenges" class="section">
             <h2>Development Challenges</h2>
@@ -160,8 +368,9 @@
 
         <section id="reflection" class="section">
             <h2>Personal Reflection</h2>
-            <p>Share what you learned from this project and how it contributed to your growth as a game developer. You
-                might discuss:</p>
+            <p>This project was useful to learn how physics can be implement in games. In particular it helped me have a
+                better grasp around the implementation of a rigidBody which is common in many engines. It also helped me
+                understand different systems like boids, cellular automata and particle Systems</p>
             <ul class="custom-list">
                 <li>New skills you acquired</li>
                 <li>What you would do differently next time</li>
@@ -170,6 +379,16 @@
             </ul>
         </section>
     </main>
+
+
+
+
+
+
+
+
+
+
 
     <footer>
         <p>© 2023 Your Name. All rights reserved.</p>
