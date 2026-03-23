@@ -40,15 +40,17 @@ header p {
 
 /* Navigation */
 nav {
-     
+    background-color: rgba(192, 207, 178, 0.85); /* Semi-transparent version of #c0cfb2 */
+    backdrop-filter: blur(8px); /* Blurs the content scrolling underneath */
+    -webkit-backdrop-filter: blur(8px); /* For Safari support */
     padding: 1.5rem;
     position: sticky;
     top: 0;
     z-index: 100;
     margin-bottom: 1rem;
     font-size: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 nav ul {
     display: flex;
     justify-content: center;

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,42 +9,48 @@
     outline: none;
     font-family: 'Poppins', sans-serif;
 }
-html{
+
+html {
     font-size: 62.5%;
-    scroll-behavior: Smooth;
+    scroll-behavior: smooth;
 }
-body{
+
+body {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     overflow-x: hidden;
     background-color: #0b0f0b;
     color: #c0cfb2;
 }
-header{
-    margin-top: 20px;
+
+/* ── Header ── */
+header {
+    transition: background-color 0.5s ease;
     position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
     padding: 1rem 9%;
     background-color: transparent;
-    filter: drop-shadow(10px);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
 }
-.logo{
-    font-size: 3rem;
+
+.logo {
+    font-size: 3.6rem;
     color: #c0cfb2;
     font-weight: 800;
     cursor: pointer;
     transition: 0.5s ease;
 }
-.logo:hover{
+
+.logo:hover {
     transform: scale(1.1);
 }
-nav a{
+
+/* ── Nav ── */
+nav a {
     font-size: 1.8rem;
     color: #c0cfb2;
     margin-left: 4rem;
@@ -51,83 +58,146 @@ nav a{
     transition: 0.3s ease;
     border-bottom: 3px solid transparent;
 }
+
 nav a:hover,
-nav a.active{
+nav a.active {
     color: #44624a;
-    border-bottom: 3px solid 	#44624a;
+    border-bottom: 3px solid #44624a;
 }
-@media(max-width:995px){
-    nav{
-        position: absolute;
+
+/* ── Hamburger ── */
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 200;
+    padding: 4px;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: #c0cfb2;
+    border-radius: 2px;
+    transition: 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Hide hamburger on desktop when not scrolled */
+@media (min-width: 751px) {
+    header:not(.scrolled) .hamburger {
+        display: none;
+    }
+}
+
+/* ── Mobile nav ── */
+@media (max-width: 750px) {
+    nav {
+        position: fixed;
         display: none;
         top: 0;
         right: 0;
-        width: 40%;
-        border-left: 3px solid #b74b4b;
-        border-bottom: 3px solid #b74b4b;
-        border-bottom-left-radius: 2rem;
-        padding: 1rem solid;
-        background-color: #161616;
-        border-top: 0.1rem solid rgba(0,0,0,0.1);
+        width: 60%;
+        max-width: 260px;
+        height: 100vh;
+        background-color: #111811;
+        border-left: 2px solid #44624a;
+        padding: 8rem 3rem 3rem;
+        flex-direction: column;
+        z-index: 150;
     }
-    nav.active{
-        display: block;
+
+    nav.active {
+        display: flex;
     }
-    nav a{
+
+    nav a {
         display: block;
         font-size: 2rem;
-        margin: 3rem 0;
+        margin: 0 0 2.5rem 0;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(68, 98, 74, 0.3);
     }
+
     nav a:hover,
-    nav a.active{
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border-bottom: 0.5rem solid #b74b4b;
+    nav a.active {
+        color: #8ba888;
+        border-bottom: 1px solid #44624a;
     }
 }
-section{
+
+/* ── Scrolled header state ── */
+header.scrolled nav {
+    display: none;
+}
+
+header.scrolled .hamburger {
+    display: flex;
+}
+
+header.scrolled nav.active {
+    display: flex;
+}
+
+header.scrolled {
+    background-color: rgba(11, 15, 11, 0.92);
+}
+
+/* ── Sections ── */
+section {
     min-height: 100vh;
     padding: 5rem 9% 5rem;
+    scroll-margin-top: 70px;
 }
-.home{
+
+/* ── Home ── */
+.home {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8rem;
-    background-color:	#0b0f0b/*#44624a*/
+    background-color: #0b0f0b;
 }
-.home .home-content h1{
+
+.home .home-content h1 {
     font-size: 6rem;
     font-weight: 700;
     line-height: 1.3;
 }
-span{
-    color:	#8ba888
+
+span {
+    color: #8ba888;
 }
-.home-content h3{
+
+.home-content h3 {
     font-size: 4rem;
     margin-bottom: 1rem;
     font-weight: 700;
 }
-.home-content p{
+
+.home-content p {
     font-size: 1.6rem;
 }
-.home-img{
+
+.home-img {
     border-radius: 50%;
 }
-.home-img img{
+
+.home-img img {
     position: relative;
     width: 32vw;
     border-radius: 50%;
-    box-shadow: 0 0 25px solid #b74b4b;
     cursor: pointer;
     transition: 0.2s linear;
 }
-.home-img img:hover{
-    font-size: 1.8rem;
-    font-weight: 500;
-}
-.social-icons a{
+
+/* ── Social icons ── */
+.social-icons a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -141,16 +211,19 @@ span{
     transition: 0.3s ease;
     color: #8ba888;
 }
-.social-icons a:hover{
+
+.social-icons a:hover {
     color: #8ba888;
     transform: scale(1.3) translateY(-5px);
     background-color: #c0cfb2;
-    box-shadow: 0  0 25px #c0cfb2;
+    box-shadow: 0 0 25px #c0cfb2;
 }
-.btn{
+
+/* ── Button ── */
+.btn {
     display: inline-block;
     padding: 1rem 2.8rem;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
     border-radius: 4rem;
     font-size: 1.6rem;
     color: #8ba888;
@@ -160,223 +233,174 @@ span{
     transition: 0.3s ease;
     cursor: pointer;
 }
-.btn:hover{
-    transform: scale3d(1.03);
+
+.btn:hover {
+    transform: scale(1.03);
     background-color: #c0cfb2;
     color: black;
     box-shadow: 0 0 25px #c0cfb2;
 }
-.typing-text{
-    font-size: 34px;
-    font-weight: 600;
-    min-width: 280px;
+
+/* ── Home responsive ── */
+@media (max-width: 1000px) {
+    .home { gap: 4rem; }
 }
-.typing-text span{
-    position: relative;
-}
-.typing-text span::before{
-    content: "software Developer";
-    color: #b74b4b;
-    animation: words 20s infinite;
-}
-.typing-text span::after{
-    content: "";
-    background-color: black;
-    position: absolute;
-    width: calc(100% + 8px);
-    height: 100%;
-    border-left: 3px solid black;
-    right: -8;
-    animation: cursor 0.6s infinite;
-}
-@keyframes cursor{
-    to{
-        border-left: 3px solid #b74b4b;
-    }
-}
-@keyframes words{
-    0%, 20%{
-        content: "Web Developer";
-    }
-    21%, 40%{
-        content: "Developer";
-    }
-    41%, 60%{
-        content: "Web Designer";
-    }
-    61%, 80%{
-        content: "Youtuber";
-    }
-    81%, 100%{
-        content: "Script Writer";
-    }
-}
-@media (max-width: 1000px){
-    .home{
-        gap: 4rem;
-    }
-}
-@media(max-width:995px){
-    .home{
+
+@media (max-width: 995px) {
+    .home {
         flex-direction: column;
         margin: 5rem 4rem;
     }
-    .home .home-content h3{
-        font-size: 2.5rem;
-    }
-    .home-content h1{
-        font-size: 5rem;
-    }
-    .home-img img{
+
+    .home .home-content h3 { font-size: 2.5rem; }
+    .home-content h1 { font-size: 5rem; }
+
+    .home-img img {
         width: 70vw;
         margin-top: 4rem;
     }
 }
 
-/*Section Projects*/
+/* ── Projects section ── */
 .projects {
     display: flex;
-    flex-direction: column; /* Change from default row to column */
-    justify-content: flex-start; /* Align items at the start vertically */
-    align-items: flex-start; /* Align items at the start horizontally */
-    gap: 2rem; /* Reduce the gap since they'll be stacked vertically */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2rem;
     background-color: #0b0f0b;
-    padding: 5rem 9%;  
-    
-    
+    padding: 5rem 9%;
 }
 
 .game-projects {
-    display: flex; /* Add flex to the container holding the cards */
-    flex-direction: row; /* Make cards align horizontally */
-    flex-wrap: wrap; /* Allow cards to wrap to next line if needed */
-    gap: 2rem; /* Space between cards */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: 100%;
 }
 
-
-.projects-header  h1{
+.projects-header h1 {
     font-size: 6rem;
     font-weight: 700;
     line-height: 1.3;
 }
 
-.projects .card-container  {
+/* ── Card container ── */
+.projects .card-container {
     text-align: left;
     color: transparent;
-    display: inline-block;
-    background-color: transparent; /*TODO: mudar para transparente*/
-    font-size: 1rem;
-    width: auto;
-    min-height: 100%;
-    line-height: 1.44;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
-    padding: 24px;
+    display: block;
+    width: 100%;
     border-radius: 4px;
-    margin: 8px 0px;
 }
 
-.projects .card-container .card{
-    width: 576px ; /* Fixed width (like YouTube thumbnails) */
-    height: 560px; /* Fixed height (adjust as needed) */
-    background-color: 		rgba(23, 32, 15, 0.527);
- 
+/* ── Card ── */
+.projects .card-container .card,
+.projects > .card {
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+    background-color: rgba(23, 32, 15, 0.527);
     border-radius: 8px;
-    overflow: hidden; /* Ensures content doesn't spill out */
+    overflow: hidden;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     display: flex;
-    flex-direction: column; /* Stack image and content vertically */
+    flex-direction: column;
+    contain: layout paint;
+    /* will-change only applied on hover, not all the time —
+       having it on every card permanently creates too many GPU layers */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.projects .card-container .card img {
+.projects .card-container .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+    will-change: transform;
+}
+
+/* ── Card image and video ── */
+.projects .card-container .card img,
+.projects .card-container .card video {
     width: 100%;
-    height: 325px;
+    height: 220px;
     object-fit: cover;
-    /* Reduce color strength (less saturation & brightness) */
-    filter: saturate(0.7) brightness(0.9); /* Adjust values as needed */
-    transition: filter 0.3s ease; /* Smooth transition on hover */
+    filter: saturate(0.7) brightness(0.9);
+    transition: filter 0.3s ease;
 }
 
-.projects .card-container .card img:hover {
-    transform: scale(1.05);
-    /* Reset to full color on hover */
+.projects .card-container .card img:hover,
+.projects .card-container .card video:hover {
     filter: saturate(1) brightness(1);
-    
-
 }
 
+/* ── Lazy placeholder (shown before image/video loads) ── */
+img.lazy,
+video.lazy-video {
+    background-color: rgba(23, 32, 15, 0.5);
+    min-height: 220px;
+}
+
+/* ── Card legend ── */
 .projects .card-container .card-legend {
     display: flex;
-    flex-direction: rp;
-    position: relative;
-    margin-left: 7px;
-    margin-right: -32px;
-    margin-bottom: -52px;
-    left: -8px;
-    background-color:#44624aa8;/* #8ba88863;*/
-    top: -40px;
-    font-size: 0.875rem;
-
+    flex-direction: row;
+    background-color: #44624aa8;
+    padding: 4px 8px;
 }
- 
-
-
-
-
-.projects .card-container .card-content {
-    padding: 10px;
-    overflow: hidden; /* Hide overflow */
-    height: 27.5rem;
-     
-    
-}
-
 
 .card-legend h1 {
     color: white;
-    margin: 0;             /* Remove default h1 margins */
-    font-size: 1.5  rem;       /* Adjust size as needed */
-    white-space: nowrap;   /* Prevent text wrapping */
+    margin: 0;
+    font-size: 1.4rem;
+    white-space: nowrap;
 }
 
 .legend-item {
-    display: flex;         /* Align icon + text horizontally */
+    display: flex;
     align-items: center;
-    gap: 8px;             /* Space between icon and text */
+    gap: 8px;
+    margin-right: 12px;
 }
 
 .legend-item img {
-    max-width: 32px;          /* Use width/height (not max-width/height) */
-    max-height: 32px;
-    padding-left: 10px ;       /* Replaced by flex gap */
-    padding-bottom: 4px;
+    max-width: 28px;
+    max-height: 28px;
+    object-fit: contain;
+}
+
+/* ── Card content ── */
+.projects .card-container .card-content,
+.projects > .card .card-content {
+    padding: 10px;
+    overflow: hidden;
+    flex: 1;
 }
 
 .card-content h1 {
     padding-top: 2rem;
     color: #44624a;
-    font-size: 3rem;       /* Adjust size as needed */
-    white-space: nowrap;   /* Prevent text wrapping */
+    font-size: 3rem;
+    white-space: normal;
+    word-break: break-word;
 }
 
-
 .card-content h2 {
-    padding: 1rem;
-    padding-left:0px;
-    padding-top: 1px;
+    padding: 1rem 0 1px 0;
     color: #8ba888;
-    font-size: 2.5rem;       /* Adjust size as needed */
-    white-space: nowrap;   /* Prevent text wrapping */
+    font-size: 2.5rem;
+    white-space: normal;
 }
 
 .card-content h3 {
-    padding: 1rem;
-    padding-left:0px;
-    padding-top: 1px;
+    padding: 1rem 0 1px 0;
     color: #c0cfb2;
-    font-size: 1.5rem;       /* Adjust size as needed */
+    font-size: 1.5rem;
     white-space: normal;
     box-sizing: border-box;
+    line-height: 1.6;
+}
+
+/* ── Education card ── */
+#education .card {
+    max-width: 700px;
 }
