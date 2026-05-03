@@ -30,7 +30,8 @@
         </div>
         <div class="home-content">
             <h1>Hi, I'm <span>Duarte</span></h1>
-            <p>As a game developer, I've worked in different areas such as UI, Gameplay, Technical Animation and Game Design. My current strengths are in Gameplay programming and Procedural Generation.</p>
+            <p>As a game developer, I've worked in different areas such as UI, Gameplay, Technical Animation and Game
+                Design. My current strengths are in Gameplay programming and Procedural Generation.</p>
             <p> I love building robust, scalable systems that bring dynamic game worlds to life!
             </p>
             <div class="social-icons">
@@ -46,14 +47,14 @@
         <div class="projects-header">
             <h1><span>Projects</span></h1>
         </div>
-          
+
 
 
         <div class="game-projects">
 
-     
-            
-           <a   class="card-container">
+
+
+            <a class="card-container">
                 <div class="card">
                     <img src="images/vroomvroomjam/menu.png" alt="Zombie Meltdown" loading="lazy">
                     <div class="card-legend">
@@ -69,13 +70,14 @@
                     <div class="card-content">
                         <h1>Vroom Vroom jam</h1>
                         <h2>Programmer</h2>
-                        <h3> A game made for ISEL Game Studios' Vroom Vroom Jam. I learned to implement basic vehicle logic in a game. The Game Jam duration was 1 week
+                        <h3> A game made for ISEL Game Studios' Vroom Vroom Jam. I learned to implement basic vehicle
+                            logic in a game. The Game Jam duration was 1 week
                             <!--<span>click me :]!</span>-->
                         </h3>
                     </div>
                 </div>
             </a>
-            
+
             <a href="projects/zombie-meltdown.html" class="card-container">
                 <div class="card">
                     <img src="images/zm/jogo.png" alt="Zombie Meltdown" loading="lazy">
@@ -92,7 +94,8 @@
                     <div class="card-content">
                         <h1>Zombie Meltdown</h1>
                         <h2>Programmer</h2>
-                        <h3>This was a solo project for the game design course I took. I had to go through the entire process of developing a game: from the earliest stages of concept to implementation.
+                        <h3>This was a solo project for the game design course I took. I had to go through the entire
+                            process of developing a game: from the earliest stages of concept to implementation.
                             It was required that I did a concept document, a Game Design Document and Playability Tests.
                             <span>click me :]!</span>
                         </h3>
@@ -100,6 +103,27 @@
                 </div>
             </a>
 
+            <a href="projects/nsb.html" class="card-container">
+                <div class="card">
+                    <img src="images/nsb/nsb_gameplay.gif" alt="Zombie Meltdown" loading="lazy">
+                    <div class="card-legend">
+                        <div class="legend-item">
+                            <img src="images/icons/massiveMultiplayer.png" alt="players icon" loading="lazy">
+                            <h1>5</h1>
+                        </div>
+                        <div class="legend-item">
+                            <img src="images/icons/wrench.png" alt="engine icon" loading="lazy">
+                            <h1>Unity</h1>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h1>Nature Strikes Back</h1>
+                        <h2>Game Programmer and Game Designer</h2>
+                        <h3>This was a project for ISEL Game Studios where I helped design the gun's drop system and changed the project to the new Unity import system so that it could be played in handheld devices <span>click me :]!</span>
+                        </h3>
+                    </div>
+                </div>
+            </a>
             <a href="projects/space-game.html" class="card-container">
                 <div class="card">
                     <video loop muted playsinline class="lazy-video" poster="images/mssn/video-placeholder.jpg">
@@ -126,27 +150,6 @@
                 </div>
             </a>
 
-            <a href="projects/TODO.html" class="card-container">
-                <div class="card">
-                    <img src="images/star.png" alt="Project Star" loading="lazy">
-                    <div class="card-legend">
-                        <div class="legend-item">
-                            <img src="images/icons/massiveMultiplayer.png" alt="players icon" loading="lazy">
-                            <h1>10</h1>
-                        </div>
-                        <div class="legend-item">
-                            <img src="images/icons/wrench.png" alt="engine icon" loading="lazy">
-                            <h1>Godot</h1>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h1>Project Star</h1>
-                        <h2>Gameplay and UI Programmer</h2>
-                        <h3>This is an on-going project with GameDev Técnico, where I'm working as a gameplay and UI programmer and also implementing procedural generation.</h3>
-                        <h3><span>I will soon add the detailed explanation of this project</span></h3>
-                    </div>
-                </div>
-            </a>
 
         </div>
     </section>
@@ -154,10 +157,10 @@
 
 
 
-   
- 
 
-    
+
+
+
 
     <section id="education" class="projects">
         <div class="projects-header">
@@ -168,7 +171,8 @@
                 <h1>Software Engineering and Multimedia — ISEL</h1>
                 <h2>Undergraduate · 3rd year</h2>
                 <h3>This is a very hands-on course, where I've already worked on many areas of software engineering and
-                    paradigms like Web Development, AI, Object-Oriented-Programming, Blender, Unity, Arduinos, and much more!
+                    paradigms like Web Development, AI, Object-Oriented-Programming, Blender, Unity, Arduinos, and much
+                    more!
                 </h3>
             </div>
         </div>
@@ -195,7 +199,7 @@
         // FIX: DOM element queried once, outside the scroll loop
         const header = document.querySelector('header');
         let ticking = false;
-        
+
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 requestAnimationFrame(() => {
@@ -216,8 +220,8 @@
                     const source = video.querySelector('source[data-src]');
                     if (source) {
                         source.src = source.dataset.src;
-                        video.load(); 
-                        video.play(); 
+                        video.load();
+                        video.play();
                     }
                     video.classList.remove('lazy-video');
                     videoObserver.unobserve(video);
