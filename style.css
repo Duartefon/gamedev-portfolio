@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+:root {
+    --global-paragraph-font-size: 2.5rem;
+    --global-h3-font-size: 2rem;
+}
 
+
+@font-face {
+    font-family: "Libra";
+    src: url(Fonts/monci.ttf);
+}
 * {
     margin: 0;
     padding: 0;
@@ -7,20 +16,43 @@
     text-decoration: none;
     border: none;
     outline: none;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Libra', sans-serif;
+
 }
 
 html {
     font-size: 62.5%;
     scroll-behavior: smooth;
+
 }
 
 body {
     width: 100%;
     min-height: 100vh;
+    height: 100vh;
     overflow-x: hidden;
-    background-color: #0b0f0b;
+    /* background-color: #0b0f0b;*/
     color: #c0cfb2;
+    position: relative;
+}
+
+
+.bg-container {
+    margin-top: -10rem;
+    width: 100%;
+    height: 100%;
+    --color1: #0b0f0b;
+    --color2: #c0cfb2;
+
+    background-color: var(--color1);
+    background-image: linear-gradient(45deg, var(--color2) 25%, transparent 25%, transparent 75%, var(--color2) 75%, var(--color2)),
+        linear-gradient(45deg, var(--color2) 25%, var(--color1) 25%, var(--color1) 75%, var(--color2) 75%, var(--color2));
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+    z-index: -1;
+    position: fixed;
+
+
 }
 
 /* ── Header ── */
@@ -35,14 +67,39 @@ header {
     justify-content: space-between;
     align-items: center;
     z-index: 100;
+    background-color: #0b0f0b;
+
+}
+
+/* ── Scrolled header state ── */
+header.scrolled nav {
+    display: none;
+}
+
+header.scrolled .hamburger {
+    display: flex;
+    
+}
+
+header.scrolled nav.active {
+    
+     
+    align-items: center;
+    display: flex;
+}
+
+header.scrolled {
+   
+    background-color: rgba(11, 15, 11, 1);
 }
 
 .logo {
-    font-size: 4rem;
+    font-size: 5rem;
     color: #c0cfb2;
     font-weight: 800;
     cursor: pointer;
     transition: 0.5s ease;
+    margin-right: 70rem;
 }
 
 .logo:hover {
@@ -51,8 +108,8 @@ header {
 
 /* ── Nav ── */
 nav a {
-    font-size: 1.8rem;
-    color: #c0cfb2;
+    font-size: 2rem;
+    color: #324935;
     margin-left: 4rem;
     font-weight: 500;
     transition: 0.3s ease;
@@ -61,9 +118,13 @@ nav a {
 
 nav a:hover,
 nav a.active {
-    color: #44624a;
+    color: #c0cfb2;
     border-bottom: 3px solid #44624a;
+    font-size: 3rem;
+    
 }
+
+
 
 /* ── Hamburger ── */
 .hamburger {
@@ -71,22 +132,31 @@ nav a.active {
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
-    z-index: 200;
-    padding: 4px;
+    padding-left: 12rem;
 }
 
 .hamburger span {
-    display: block;
-    width: 25px;
-    height: 2px;
+    display: flex;
+    width: 2.5rem;
+    height: 0.2rem;
     background: #c0cfb2;
-    border-radius: 2px;
+    
     transition: 0.3s ease;
 }
 
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+ 
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+    
+}
 
 /* Hide hamburger on desktop when not scrolled */
 @media (min-width: 751px) {
@@ -114,6 +184,7 @@ nav a.active {
 
     nav.active {
         display: flex;
+        
     }
 
     nav a {
@@ -131,28 +202,19 @@ nav a.active {
     }
 }
 
-/* ── Scrolled header state ── */
-header.scrolled nav {
-    display: none;
-}
 
-header.scrolled .hamburger {
-    display: flex;
-}
-
-header.scrolled nav.active {
-    display: flex;
-}
-
-header.scrolled {
-    background-color: rgba(11, 15, 11, 0.92);
-}
 
 /* ── Sections ── */
 section {
-    min-height: 100vh;
-    padding: 5rem 9% 5rem;
+
+
     scroll-margin-top: 70px;
+
+
+
+
+
+
 }
 
 /* ── Home ── */
@@ -161,13 +223,27 @@ section {
     justify-content: center;
     align-items: center;
     gap: 8rem;
+    max-width: 82%;
+
     background-color: #0b0f0b;
+
+
+
+
+
+    margin: 0 auto;
+    margin-top: 15rem;
+    padding: 5rem;
+
 }
+
+
 
 .home .home-content h1 {
     font-size: 6rem;
     font-weight: 700;
     line-height: 1.3;
+    background-color: #0b0f0b;
 }
 
 span {
@@ -181,16 +257,15 @@ span {
 }
 
 .home-content p {
-    font-size: 1.6rem;
+    font-size: var(--global-paragraph-font-size);
+    margin-right: 10rem;
 }
 
-.home-img {
-    border-radius: 50%;
-}
+
 
 .home-img img {
     position: relative;
-    width: 32vw;
+    width: 20vw;
     border-radius: 50%;
     cursor: pointer;
     transition: 0.2s linear;
@@ -201,20 +276,21 @@ span {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 4rem;
-    height: 4rem;
+    width: 6rem;
+    height: 6rem;
     background-color: transparent;
     border: 0.2rem solid #c0cfb2;
-    font-size: 2rem;
+    font-size: 4rem;
     border-radius: 50%;
     margin: 3rem 1.5rem 3rem 0;
     transition: 0.3s ease;
     color: #8ba888;
+ 
 }
 
 .social-icons a:hover {
     color: #8ba888;
-    transform: scale(1.3) translateY(-5px);
+  
     background-color: #c0cfb2;
     box-shadow: 0 0 25px #c0cfb2;
 }
@@ -224,7 +300,7 @@ span {
     display: inline-block;
     padding: 1rem 2.8rem;
     background-color: transparent;
-    border-radius: 4rem;
+    border-radius: 5rem;
     font-size: 1.6rem;
     color: #8ba888;
     letter-spacing: 0.3rem;
@@ -232,6 +308,8 @@ span {
     border: 2px solid #8ba888;
     transition: 0.3s ease;
     cursor: pointer;
+    margin-bottom: 1rem;
+    
 }
 
 .btn:hover {
@@ -243,7 +321,9 @@ span {
 
 /* ── Home responsive ── */
 @media (max-width: 1000px) {
-    .home { gap: 4rem; }
+    .home {
+        gap: 4rem;
+    }
 }
 
 @media (max-width: 995px) {
@@ -252,8 +332,13 @@ span {
         margin: 5rem 4rem;
     }
 
-    .home .home-content h3 { font-size: 2.5rem; }
-    .home-content h1 { font-size: 5rem; }
+    .home .home-content h3 {
+        font-size: 2.5rem;
+    }
+
+    .home-content h1 {
+        font-size: 5rem;
+    }
 
     .home-img img {
         width: 70vw;
@@ -268,41 +353,56 @@ span {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 2rem;
-    background-color: #0b0f0b;
-    padding: 5rem 9%;
+    padding-left: 9%;
+    margin-right: 9%;
+    margin-top: 2%
+    
+
 }
 
 .game-projects {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    width: 100%;
+     
+    
+    background-color: #0b0f0b;
+    border-color: #0b0f0b;
+ 
+    padding: 1.5rem;
+    
+
 }
 
 .projects-header h1 {
     font-size: 6rem;
     font-weight: 700;
     line-height: 1.3;
+    background-color: #0b0f0b;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: -2rem;
 }
 
 /* ── Card container ── */
 .projects .card-container {
     text-align: left;
     color: transparent;
-    display: block;
-    width: 100%;
-    border-radius: 4px;
+  
+ 
+ 
+
+
 }
 
 /* ── Card ── */
 .projects .card-container .card,
-.projects > .card {
-    width: 100%;
-    height: auto;
-    min-height: 400px;
+.projects>.card {
+   
+    max-height: 85rem;
+    min-height: 72rem;
     background-color: rgba(23, 32, 15, 0.527);
     border-radius: 8px;
-    overflow: hidden;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -310,6 +410,9 @@ span {
     /* will-change only applied on hover, not all the time —
        having it on every card permanently creates too many GPU layers */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+ 
+   
+
 }
 
 .projects .card-container .card:hover {
@@ -330,7 +433,7 @@ span {
 
 .projects .card-container .card img:hover,
 .projects .card-container .card video:hover {
-    filter: saturate(1) brightness(1);
+    filter: saturate(1) brightness(1.25);
 }
 
 /* ── Lazy placeholder (shown before image/video loads) ── */
@@ -370,10 +473,11 @@ video.lazy-video {
 
 /* ── Card content ── */
 .projects .card-container .card-content,
-.projects > .card .card-content {
+.projects>.card .card-content {
     padding: 10px;
     overflow: hidden;
     flex: 1;
+    
 }
 
 .card-content h1 {
@@ -382,6 +486,7 @@ video.lazy-video {
     font-size: 3rem;
     white-space: normal;
     word-break: break-word;
+   
 }
 
 .card-content h2 {
@@ -394,7 +499,7 @@ video.lazy-video {
 .card-content h3 {
     padding: 1rem 0 1px 0;
     color: #c0cfb2;
-    font-size: 1.5rem;
+    font-size: var( --global-h3-font-size);
     white-space: normal;
     box-sizing: border-box;
     line-height: 1.6;
@@ -402,5 +507,15 @@ video.lazy-video {
 
 /* ── Education card ── */
 #education .card {
-    max-width: 700px;
+     background-color: #0b0f0b;
+     margin-top: 0rem;
+     border-radius: 0rem;
+     margin-left: 0rem;
+     min-height: 0;
+     margin-bottom: 5rem;
+     
+     
 }
+
+ 
+ 
