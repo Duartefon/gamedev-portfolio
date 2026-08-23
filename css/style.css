@@ -1,14 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
 :root {
-    --global-paragraph-font-size: 2.5rem;
+    --global-paragraph-font-size: 1.5rem;
     --global-h3-font-size: 2rem;
 }
 
 
 @font-face {
-    font-family: "Libra";
-    src: url(Fonts/monci.ttf);
+    font-family: "SuperBouncer";
+    src: url('../Fonts/Super Bouncer.ttf');
 }
+
+ 
+
+    @font-face {
+    font-family: 'PialaRegular';
+  
+    font-style: normal;
+    font-weight: bold;
+   
+    src: local('Piala Regular'), url('../Fonts/Piala-Regular.otf') format('woff');
+    }
 * {
     margin: 0;
     padding: 0;
@@ -16,17 +27,13 @@
     text-decoration: none;
     border: none;
     outline: none;
-    font-family: 'Libra', sans-serif;
+    font-family: 'PialaRegular', sans-serif;
+  
 
 }
-
-html {
-    font-size: 62.5%;
-    scroll-behavior: smooth;
-
-}
-
+ 
 body {
+ 
     width: 100%;
     min-height: 100vh;
     height: 100vh;
@@ -38,6 +45,7 @@ body {
 
 
 .bg-container {
+    animation: moveIt 60s linear infinite; 
     margin-top: -10rem;
     width: 100%;
     height: 100%;
@@ -45,18 +53,34 @@ body {
     --color2: #c0cfb2;
 
     background-color: var(--color1);
-    background-image: linear-gradient(45deg, var(--color2) 25%, transparent 25%, transparent 75%, var(--color2) 75%, var(--color2)),
-        linear-gradient(45deg, var(--color2) 25%, var(--color1) 25%, var(--color1) 75%, var(--color2) 75%, var(--color2));
+    background-image: linear-gradient(45deg, var(--color2) 27%, transparent 25%, transparent 75%, var(--color2) 75%, var(--color2)),
+        linear-gradient(45deg, var(--color2) 27%, var(--color1) 25%, var(--color1) 75%, var(--color2) 75%, var(--color2));
     background-size: 60px 60px;
     background-position: 0 0, 30px 30px;
     z-index: -1;
     position: fixed;
 
+    
 
+
+}
+
+
+@keyframes moveIt {
+    from {
+        
+        background-position: 0 0, 30px 30px;
+    }
+    to {
+     
+ 
+        background-position: -1030px 1000px, -1000px 1030px;
+    }
 }
 
 /* ── Header ── */
 header {
+    
     transition: background-color 0.5s ease;
     position: fixed;
     top: 0;
@@ -66,8 +90,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 100;
+    z-index: 1;
     background-color: #0b0f0b;
+   
 
 }
 
@@ -85,7 +110,7 @@ header.scrolled nav.active {
     
      
     align-items: center;
-    display: flex;
+    display: grid;
 }
 
 header.scrolled {
@@ -93,21 +118,15 @@ header.scrolled {
     background-color: rgba(11, 15, 11, 1);
 }
 
-.logo {
-    font-size: 5rem;
-    color: #c0cfb2;
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.5s ease;
-    margin-right: 70rem;
-}
 
-.logo:hover {
-    transform: scale(1.1);
-}
 
 /* ── Nav ── */
+
+nav {
+      display: grid;  
+}
 nav a {
+    font-family: "SuperBouncer";
     font-size: 2rem;
     color: #324935;
     margin-left: 4rem;
@@ -120,8 +139,26 @@ nav a:hover,
 nav a.active {
     color: #c0cfb2;
     border-bottom: 3px solid #44624a;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    display: grid;
     
+}
+ 
+.logo {
+    font-family: "SuperBouncer";
+    font-size: 3.5rem;
+    color: #c0cfb2;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.5s ease;
+    margin-right: 70rem;
+    margin-left: 0.5rem;
+   
+  
+}
+
+.logo:hover {
+    transform: scale(1.1);
 }
 
 
@@ -219,6 +256,7 @@ section {
 
 /* ── Home ── */
 .home {
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -240,23 +278,26 @@ section {
 
 
 .home .home-content h1 {
-    font-size: 6rem;
-    font-weight: 700;
+    font-family: 'PialaRegular';
+    
+    font-size: 4rem;
     line-height: 1.3;
     background-color: #0b0f0b;
 }
 
 span {
+    font-family: 'SuperBouncer';
+    font-size: 4rem;
+    margin: auto;
     color: #8ba888;
 }
 
-.home-content h3 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
+ 
 
 .home-content p {
+   
+    font-family: 'PialaRegular';
+
     font-size: var(--global-paragraph-font-size);
     margin-right: 10rem;
 }
@@ -265,10 +306,11 @@ span {
 
 .home-img img {
     position: relative;
-    width: 20vw;
-    border-radius: 50%;
+    width: 30vw;
     cursor: pointer;
     transition: 0.2s linear;
+    margin-top: -8rem;
+ 
 }
 
 /* ── Social icons ── */
@@ -276,11 +318,11 @@ span {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 6rem;
-    height: 6rem;
+    width: 3rem;
+    height: 3rem;
     background-color: transparent;
     border: 0.2rem solid #c0cfb2;
-    font-size: 4rem;
+    font-size: var(--global-paragraph-font-size);
     border-radius: 50%;
     margin: 3rem 1.5rem 3rem 0;
     transition: 0.3s ease;
@@ -298,10 +340,10 @@ span {
 /* ── Button ── */
 .btn {
     display: inline-block;
-    padding: 1rem 2.8rem;
+    padding: 1rem 1.5rem;
     background-color: transparent;
     border-radius: 5rem;
-    font-size: 1.6rem;
+    font-size: var(--global-paragraph-font-size);
     color: #8ba888;
     letter-spacing: 0.3rem;
     font-weight: 600;
@@ -342,7 +384,6 @@ span {
 
     .home-img img {
         width: 70vw;
-        margin-top: 4rem;
     }
 }
 
@@ -355,14 +396,14 @@ span {
     gap: 2rem;
     padding-left: 9%;
     margin-right: 9%;
-    margin-top: 2%
+    margin-top: 10%
     
 
 }
 
 .game-projects {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     gap: 2rem;
      
     
@@ -382,6 +423,7 @@ span {
     padding-left: 1rem;
     padding-right: 1rem;
     margin-bottom: -2rem;
+    
 }
 
 /* ── Card container ── */
@@ -399,8 +441,8 @@ span {
 .projects .card-container .card,
 .projects>.card {
    
-    max-height: 85rem;
-    min-height: 72rem;
+    max-height: 50rem;
+    min-height: 45rem;
     background-color: rgba(23, 32, 15, 0.527);
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
@@ -477,13 +519,16 @@ video.lazy-video {
     padding: 10px;
     overflow: hidden;
     flex: 1;
+    font-size: 1.2rem;
+    
     
 }
 
 .card-content h1 {
+    
     padding-top: 2rem;
     color: #44624a;
-    font-size: 3rem;
+ 
     white-space: normal;
     word-break: break-word;
    
@@ -492,20 +537,23 @@ video.lazy-video {
 .card-content h2 {
     padding: 1rem 0 1px 0;
     color: #8ba888;
-    font-size: 2.5rem;
+    
     white-space: normal;
 }
 
 .card-content h3 {
     padding: 1rem 0 1px 0;
     color: #c0cfb2;
-    font-size: var( --global-h3-font-size);
+    
     white-space: normal;
     box-sizing: border-box;
     line-height: 1.6;
 }
 
-/* ── Education card ── */
+.card-content span{
+    font-size: 1rem;
+}
+ 
 #education .card {
      background-color: #0b0f0b;
      margin-top: 0rem;
@@ -513,9 +561,9 @@ video.lazy-video {
      margin-left: 0rem;
      min-height: 0;
      margin-bottom: 5rem;
-     
-     
+     padding-left: 1rem;
+             
 }
-
+ 
  
  

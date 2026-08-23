@@ -1,0 +1,478 @@
+/* ============================================================
+   Portfolio Template — shared stylesheet
+   Used by every project page. Edit here once, every page updates.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+:root {
+    --bg: #0b0f0b;
+    --text: #c0cfb2;
+    --panel: #324935;
+    --accent: #4ca1af;
+    --accent-hover: #3a7d8a;
+    --heading: #E1EEBC;
+    --cream: #f2e8d3;
+
+    --header-height: 4.5rem;
+    --sidebar-width: 260px;
+    --sidebar-width-collapsed: 0px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + 1rem);
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* ── Header: logo strip only ── */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    padding: 0 1.5rem;
+    background-color: rgba(11, 15, 11, 0.92);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 200;
+    border-bottom: 1px solid rgba(192, 207, 178, 0.1);
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+header .logo img {
+    height: calc(var(--header-height) - 1.5rem);
+    display: block;
+}
+
+header .logo h1 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+header .logo p {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 300;
+}
+
+/* ── Hamburger (mobile nav toggle) ── */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 300;
+    padding: 4px;
+    background: none;
+    border: none;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Sidebar navigation (left, vertical) ── */
+nav#sidebar {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    overflow-y: auto;
+    padding: 1.5rem 0;
+    background-color: rgba(11, 15, 11, 0.97);
+    border-right: 1px solid rgba(192, 207, 178, 0.1);
+    z-index: 150;
+    transition: transform 0.3s ease;
+}
+
+nav#sidebar ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+nav#sidebar li {
+    margin: 0;
+}
+
+nav#sidebar a {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-left: 3px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+nav#sidebar a:hover {
+    background-color: rgba(76, 161, 175, 0.15);
+}
+
+nav#sidebar a.active {
+    background-color: rgba(76, 161, 175, 0.15);
+    border-left-color: var(--accent);
+    color: var(--heading);
+}
+
+/* Overlay shown behind the sidebar on mobile when it's open */
+.nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 140;
+}
+
+/* ── Main content ── */
+main {
+    margin-left: var(--sidebar-width);
+    padding-top: var(--header-height);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ── Project hero ── */
+.project-hero {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 3rem 5% 0;
+}
+
+.project-hero-image {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    height: 321px;
+    position: relative;
+}
+
+.project-hero-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: transform 0.3s;
+    object-fit: cover;
+    object-position: center;
+}
+
+.project-hero-image img:hover {
+    transform: scale(1.02);
+}
+
+.project-hero-details {
+    flex: 1;
+    min-width: 300px;
+}
+
+.project-meta {
+    background-color: var(--panel);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+.meta-item {
+    margin-bottom: 0.8rem;
+}
+
+.meta-item h3 {
+    color: var(--heading);
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+}
+
+.meta-item p {
+    color: var(--cream);
+}
+
+.project-links a {
+    display: inline-block;
+    background-color: var(--accent);
+    color: var(--cream);
+    padding: 0.7rem 1.5rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.project-links a:hover {
+    background-color: var(--accent-hover);
+}
+
+/* ── Sections ── */
+.section {
+    background-color: var(--panel);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin: 0 5% 2rem;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+}
+
+.section h2 {
+    color: var(--heading);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.section p {
+    margin-bottom: 1rem;
+}
+
+.custom-list {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.custom-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* ── Gallery ── */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.gallery-item {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ── Features list ── */
+.features-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.feature-card {
+    background-color: var(--cream);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    color: var(--text);
+}
+
+.feature-card h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+    color: black;
+}
+
+/* ── Footer ── */
+footer {
+    background-color: var(--bg);
+    color: var(--cream);
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+.social-links {
+    margin-top: 1rem;
+}
+
+.social-links a {
+    color: var(--cream);
+    margin: 0 0.5rem;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--accent);
+}
+
+/* ── Collapsible blocks ── */
+.collapsible-toggle {
+    display: none;
+}
+
+.collapsible-content {
+    display: none;
+}
+
+.collapsible-toggle:checked + .collapsible-btn + .collapsible-content {
+    display: block;
+    max-height: none;
+}
+
+.content-inner {
+    padding: 18px;
+    background: var(--cream);
+    color: black;
+}
+
+.collapsible-btn {
+    display: block;
+    background: #777;
+    color: var(--cream);
+    padding: 18px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.collapsible-btn:hover {
+    background: #555;
+}
+
+.collapsible-btn::after {
+    content: '▼';
+    float: right;
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+.collapsible-toggle:checked ~ .collapsible-btn::after {
+    transform: rotate(0deg);
+}
+
+.wrapper {
+    display: flex;
+    gap: 4rem;
+    flex-wrap: wrap;
+}
+
+.left {
+    flex: 1 1 60%;
+}
+
+.right {
+    flex: 1 1 30%;
+}
+
+.center-img {
+    display: block;
+    margin: auto;
+    width: 65%;
+    max-width: 100%;
+}
+
+/* ── Code blocks ── */
+pre {
+    padding: 0.5em;
+    margin: 0.3em 0;
+    border: 1px solid #f0f0f0;
+    background: #f8f8f8;
+    overflow: auto;
+    border-radius: 4px;
+}
+
+/* ============================================================
+   Responsive: sidebar becomes an off-canvas drawer
+   ============================================================ */
+@media (max-width: 900px) {
+    :root {
+        --sidebar-width: 240px;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    nav#sidebar {
+        transform: translateX(-100%);
+    }
+
+    nav#sidebar.nav-open {
+        transform: translateX(0);
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.4);
+    }
+
+    body.nav-open .nav-overlay {
+        display: block;
+    }
+
+    main {
+        margin-left: 0;
+    }
+
+    .project-hero,
+    .section {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .wrapper {
+        flex-direction: column;
+    }
+}
