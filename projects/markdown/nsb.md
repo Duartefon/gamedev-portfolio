@@ -1,7 +1,7 @@
 ---
 title: Nature Strikes Back
-logo: /../../images/nsb/image.png
-heroImage: /../../images/nsb/nsbScreen.jpg
+logo: /images/nsb/image.png
+heroImage: /images/nsb/nsbScreen.jpg
 meta:
   Role: Lead Developer/Programmer, Designer
   Engine/Tools: Unity and Blender

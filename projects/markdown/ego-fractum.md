@@ -1,6 +1,6 @@
 ---
 title: EgoFractum
-heroImage: /../../images/EgoFractum/Banner.png
+heroImage: /images/EgoFractum/Banner.png
 meta:
   Role: Lead Developer/Programmer, Designer
   Engine/Tools: Unity and Blender

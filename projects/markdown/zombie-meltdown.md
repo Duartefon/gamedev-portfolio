@@ -1,7 +1,7 @@
 ---
 title: Zombie Meltdown
-logo: /../../images/zm/horizontal_title.png
-heroImage: /../../images/zm/main_menu.png
+logo: /images/zm/horizontal_title.png
+heroImage: /images/zm/main_menu.png
 meta:
   Role: Lead Developer/Programmer, Designer
   Engine/Tools: Unity and Blender

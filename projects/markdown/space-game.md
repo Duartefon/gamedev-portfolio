@@ -1,7 +1,7 @@
 ---
 title: Space Game
 tagline: So many systems!
-heroImage: ../../images/mssn/mssn_portfolio.GIF
+heroImage: /images/mssn/mssn_portfolio.GIF
 meta:
   Role: Lead Developer/Programmer, Designer
   Engine/Tools: Java and Processing
@@ -50,12 +50,11 @@ A rigid body means that it will not be possible to deform the body, in other wor
 - 2d Acceleration Vector
 - A method to apply force to the body once
 - A method to simulate all forces applied to the body
-
-![RigidBody diagram](../../images/mssn/mod/rigidBody.png)
+![RigidBody diagram](/images/mssn/mod/rigidBody.png)
 
 Now that we have a way to represent our body in the virtual world we need a way to move it. In the next diagram you can see how the movement was planned out:
 
-![Stock and flow diagram](../../images/mssn/mod/stockflow_en.png)
+![Stock and flow diagram](/images/mssn/mod/stockflow_en.png)
 :::
 
 :::collapsible RigidBody Code
