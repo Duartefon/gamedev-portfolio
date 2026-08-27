@@ -51,11 +51,40 @@
      - src: screenshot2.jpg
        alt: Gameplay screenshot 2
      :::
+
+   ── Path handling ───────────────────────────────────────────
+   Every internal path (data-source on #project-root, heroImage,
+   logo, gallery/feature image paths, and any ![](...) image in
+   the Markdown body) should be written *relative to the site
+   root*, with no leading "/" and no "../" — e.g. "images/zm/hero.png",
+   "projects/markdown/space-game.md".
+
+   This script resolves those paths itself, based on where THIS
+   FILE lives (which is fixed: always at "<site-root>/js/render-project.js"),
+   not based on where the current page lives. That means a page can
+   be nested at any depth — /space-game.html or /projects/html/space-game.html —
+   and the same site-root-relative paths in its Markdown work unchanged,
+   with no per-page "../" counting.
+
+   External paths (http://, https://, // or data:) are left untouched.
    ============================================================ */
 
 (function () {
     const root = document.getElementById('project-root');
     if (!root) return;
+
+    // This script always lives at <site-root>/js/render-project.js, so its
+    // own location tells us exactly where the site root is — regardless of
+    // how deeply the current PAGE is nested.
+    const SITE_ROOT = new URL('../', document.currentScript.src);
+
+    function resolvePath(path) {
+        if (!path) return path;
+        if (/^([a-z][a-z0-9+.-]*:)?\/\//i.test(path) || path.startsWith('data:')) {
+            return path; // already a full URL (http://, https://, //cdn...) or a data URI
+        }
+        return new URL(path.replace(/^\/+/, ''), SITE_ROOT).href;
+    }
 
     const src = root.getAttribute('data-source');
     if (!src) {
@@ -65,7 +94,7 @@
 
     let collapsibleCounter = 0;
 
-    fetch(src)
+    fetch(resolvePath(src))
         .then((response) => {
             if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
             return response.text();
@@ -75,13 +104,14 @@
             root.innerHTML = '';
             renderHero(frontmatter);
             renderSections(body);
+            resolveImagePaths(root);
             if (window.Prism) window.Prism.highlightAll();
             // Tell nav-builder.js (and anything else) the content now exists.
             document.dispatchEvent(new CustomEvent('sections-ready'));
         })
         .catch((err) => {
             console.error('Failed to load project content:', err);
-            root.innerHTML = `<p class="loading-note">Couldn't load this project's content (${escapeHtml(src)}). ${escapeHtml(err.message)}</p>`;
+            root.innerHTML = `<p class="loading-note">Couldn't load this project's content (${escapeHtml(src)} → ${escapeHtml(resolvePath(src))}). ${escapeHtml(err.message)}</p>`;
         });
 
     // ── Frontmatter + body split ──────────────────────────────
@@ -97,7 +127,7 @@
         const logoSlot = document.getElementById('logo-slot');
         if (logoSlot) {
             const titleHtml = fm.logo
-                ? `<img src="${escapeAttr(fm.logo)}" alt="${escapeAttr(fm.title || '')} logo">`
+                ? `<img src="${escapeAttr(resolvePath(fm.logo))}" alt="${escapeAttr(fm.title || '')} logo">`
                 : `<h1>${escapeHtml(fm.title || 'Untitled project')}</h1>`;
             logoSlot.innerHTML = `
                 <div>
@@ -126,7 +156,7 @@
             : '';
 
         const heroImageHtml = fm.heroImage
-            ? `<div class="project-hero-image"><img src="${escapeAttr(fm.heroImage)}" alt="${escapeAttr(fm.title || '')} screenshot"></div>`
+            ? `<div class="project-hero-image"><img src="${escapeAttr(resolvePath(fm.heroImage))}" alt="${escapeAttr(fm.title || '')} screenshot"></div>`
             : '';
 
         if (!metaHtml && !linksHtml && !heroImageHtml) return; // nothing to show, skip the hero block
@@ -218,7 +248,7 @@
     function renderGallery(inner) {
         const items = (window.jsyaml && jsyaml.load(inner)) || [];
         const shots = items
-            .map((g) => `<div class="gallery-item"><img src="${escapeAttr(g.src)}" alt="${escapeAttr(g.alt || '')}"></div>`)
+            .map((g) => `<div class="gallery-item"><img src="${escapeAttr(resolvePath(g.src))}" alt="${escapeAttr(g.alt || '')}"></div>`)
             .join('');
         return `<div class="gallery">${shots}</div>`;
     }
@@ -227,6 +257,15 @@
     function centerStandaloneImages(html) {
         // A paragraph containing only a single <img> gets the centered treatment
         return html.replace(/<p>(\s*<img[^>]+>\s*)<\/p>/g, '<div class="center-img">$1</div>');
+    }
+
+    // Markdown ![](path) images (and any raw <img> in the body) are written
+    // by marked.js as literal <img src="..."> — rewrite those src attributes
+    // to be resolved against the site root too, same as heroImage/logo/gallery.
+    function resolveImagePaths(container) {
+        container.querySelectorAll('img[src]').forEach((img) => {
+            img.setAttribute('src', resolvePath(img.getAttribute('src')));
+        });
     }
 
     function slugify(text) {

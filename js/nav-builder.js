@@ -9,80 +9,105 @@
    <ul id="sidebar-links"> ... static <li> items ... </ul>
    in the HTML — anything already in the list is kept, and the
    auto-generated section links are appended after it.
+
+   Static links (like Home / All Projects) can't be resolved by
+   render-project.js since they don't come from the Markdown — give
+   them a data-root-href instead of href, written relative to the
+   site root (e.g. data-root-href="index.html"), and this script
+   resolves it the same way as the other shared scripts: based on
+   where THIS FILE lives, not where the current page lives.
    ============================================================ */
 
-// Sections are now injected dynamically by render-project.js, so we build the
-// nav once that script dispatches "sections-ready" rather than on page load.
-document.addEventListener('sections-ready', () => {
-    const sidebar = document.getElementById('sidebar');
-    const list = document.getElementById('sidebar-links');
-    const header = document.querySelector('header');
-    const hamburger = document.querySelector('.hamburger');
+(function () {
+    // This script always lives at <site-root>/js/nav-builder.js.
+    const SITE_ROOT = new URL('../', document.currentScript.src);
 
-    if (!sidebar || !list) return;
+    function resolvePath(path) {
+        if (!path) return path;
+        if (/^([a-z][a-z0-9+.-]*:)?\/\//i.test(path) || path.startsWith('data:') || path.startsWith('#')) {
+            return path;
+        }
+        return new URL(path.replace(/^\/+/, ''), SITE_ROOT).href;
+    }
 
-    // 1) Auto-build links from every top-level <section> with an id + heading
-    const sections = document.querySelectorAll('main section.section[id]');
-    const seen = new Set();
-
-    sections.forEach((section) => {
-        const id = section.getAttribute('id');
-        if (!id || seen.has(id)) return;
-        seen.add(id);
-
-        const heading = section.querySelector('h2');
-        const label = heading ? heading.textContent.trim() : id;
-
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = `#${id}`;
-        a.textContent = label;
-        li.appendChild(a);
-        list.appendChild(li);
-    });
-
-    // 2) Hamburger toggle (mobile off-canvas sidebar)
-    if (hamburger) {
-        hamburger.addEventListener('click', () => {
-            const isOpen = sidebar.classList.toggle('nav-open');
-            hamburger.classList.toggle('open', isOpen);
-            document.body.classList.toggle('nav-open', isOpen);
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('a[data-root-href]').forEach((a) => {
+            a.href = resolvePath(a.getAttribute('data-root-href'));
         });
-    }
-
-    // Close the sidebar when a link is tapped (mobile) or the overlay is clicked
-    const closeNav = () => {
-        sidebar.classList.remove('nav-open');
-        document.body.classList.remove('nav-open');
-        if (hamburger) hamburger.classList.remove('open');
-    };
-
-    sidebar.addEventListener('click', (e) => {
-        if (e.target.tagName === 'A') closeNav();
     });
 
-    const overlay = document.querySelector('.nav-overlay');
-    if (overlay) overlay.addEventListener('click', closeNav);
+    // Sections are now injected dynamically by render-project.js, so we build
+    // the nav once that script dispatches "sections-ready" rather than on load.
+    document.addEventListener('sections-ready', () => {
+        const sidebar = document.getElementById('sidebar');
+        const list = document.getElementById('sidebar-links');
+        const hamburger = document.querySelector('.hamburger');
 
-    // 3) Highlight the active section link while scrolling
-    const navLinks = sidebar.querySelectorAll('a[href^="#"]');
-    const observed = Array.from(navLinks)
-        .map((link) => document.getElementById(link.getAttribute('href').slice(1)))
-        .filter(Boolean);
+        if (!sidebar || !list) return;
 
-    if ('IntersectionObserver' in window && observed.length) {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        navLinks.forEach((link) => link.classList.remove('active'));
-                        const active = sidebar.querySelector(`a[href="#${entry.target.id}"]`);
-                        if (active) active.classList.add('active');
-                    }
-                });
-            },
-            { rootMargin: '-45% 0px -50% 0px' }
-        );
-        observed.forEach((section) => observer.observe(section));
-    }
-});
+        // 1) Auto-build links from every top-level <section> with an id + heading
+        const sections = document.querySelectorAll('main section.section[id]');
+        const seen = new Set();
+
+        sections.forEach((section) => {
+            const id = section.getAttribute('id');
+            if (!id || seen.has(id)) return;
+            seen.add(id);
+
+            const heading = section.querySelector('h2');
+            const label = heading ? heading.textContent.trim() : id;
+
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = `#${id}`;
+            a.textContent = label;
+            li.appendChild(a);
+            list.appendChild(li);
+        });
+
+        // 2) Hamburger toggle (mobile off-canvas sidebar)
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                const isOpen = sidebar.classList.toggle('nav-open');
+                hamburger.classList.toggle('open', isOpen);
+                document.body.classList.toggle('nav-open', isOpen);
+            });
+        }
+
+        // Close the sidebar when a link is tapped (mobile) or the overlay is clicked
+        const closeNav = () => {
+            sidebar.classList.remove('nav-open');
+            document.body.classList.remove('nav-open');
+            if (hamburger) hamburger.classList.remove('open');
+        };
+
+        sidebar.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') closeNav();
+        });
+
+        const overlay = document.querySelector('.nav-overlay');
+        if (overlay) overlay.addEventListener('click', closeNav);
+
+        // 3) Highlight the active section link while scrolling
+        const navLinks = sidebar.querySelectorAll('a[href^="#"]');
+        const observed = Array.from(navLinks)
+            .map((link) => document.getElementById(link.getAttribute('href').slice(1)))
+            .filter(Boolean);
+
+        if ('IntersectionObserver' in window && observed.length) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            navLinks.forEach((link) => link.classList.remove('active'));
+                            const active = sidebar.querySelector(`a[href="#${entry.target.id}"]`);
+                            if (active) active.classList.add('active');
+                        }
+                    });
+                },
+                { rootMargin: '-45% 0px -50% 0px' }
+            );
+            observed.forEach((section) => observer.observe(section));
+        }
+    });
+})();
