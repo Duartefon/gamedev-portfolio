@@ -18,7 +18,10 @@
     font-style: normal;
     font-weight: bold;
    
-    src: local('Piala Regular'), url('../Fonts/Piala-Regular.otf') format('woff');
+    src: local('Piala Regular'), url('../Fonts/matcha_squishy/Matcha\ Squishy.otf') format('woff');
+
+
+
     }
 * {
     margin: 0;
@@ -85,7 +88,7 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 1rem 9%;
+    padding: 1rem 8%;
     background-color: transparent;
     display: flex;
     justify-content: space-between;
@@ -99,11 +102,13 @@ header {
 /* ── Scrolled header state ── */
 header.scrolled nav {
     display: none;
+
 }
 
 header.scrolled .hamburger {
     display: flex;
     
+    margin-left: -15rem;
 }
 
 header.scrolled nav.active {
@@ -133,6 +138,7 @@ nav a {
     font-weight: 500;
     transition: 0.3s ease;
     border-bottom: 3px solid transparent;
+    margin-left: -5rem;
 }
 
 nav a:hover,
@@ -152,7 +158,7 @@ nav a.active {
     cursor: pointer;
     transition: 0.5s ease;
     margin-right: 70rem;
-    margin-left: 0.5rem;
+    margin-left: 2rem;
    
   
 }
