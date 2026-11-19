@@ -48,38 +48,28 @@ body {
 
 
 .bg-container {
-    animation: moveIt 60s linear infinite; 
-    margin-top: -10rem;
-    width: 100%;
-    height: 100%;
-    --color1: #0b0f0b;
-    --color2: #c0cfb2;
-
-    background-color: var(--color1);
-    background-image: linear-gradient(45deg, var(--color2) 27%, transparent 25%, transparent 75%, var(--color2) 75%, var(--color2)),
-        linear-gradient(45deg, var(--color2) 27%, var(--color1) 25%, var(--color1) 75%, var(--color2) 75%, var(--color2));
-    background-size: 60px 60px;
-    background-position: 0 0, 30px 30px;
-    z-index: -1;
     position: fixed;
-
+    inset: 0; /* Pins top, right, bottom, and left to 0 */
+    z-index: -1;
     
-
-
+    background-color: #0b0f0b;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Crect width='30' height='30' fill='%23c0cfb2' fill-opacity='0.6'/%3E%3Crect x='30' y='30' width='30' height='30' fill='%23c0cfb2' fill-opacity='0.6'/%3E%3C/svg%3E");
+    background-size: 60px 60px;
+    
+    animation: moveIt 60s linear infinite;
 }
-
 
 @keyframes moveIt {
     from {
-        
-        background-position: 0 0, 30px 30px;
+        background-position: 0 0;
     }
     to {
-     
- 
-        background-position: -1030px 1000px, -1000px 1030px;
+        /* Use an exact multiple of background-size (60px) for a seamless loop */
+        background-position: -600px 600px;
     }
 }
+
+
 
 /* ── Header ── */
 header {
@@ -370,6 +360,7 @@ span {
 /* ── Home responsive ── */
 @media (max-width: 1000px) {
     .home {
+    background-color: #0b0f0b;
         gap: 4rem;
     }
 }
@@ -407,7 +398,7 @@ span {
 
 }
 
-.game-projects {
+.display-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
     gap: 2rem;
@@ -421,6 +412,15 @@ span {
 
 }
 
+.projects-header {
+    display: flex; /* Eliminates HTML whitespace gaps between inline buttons */
+    background-color: #0b0f0b;
+    width: fit-content; /* Or '100%' if you want a full-width header bar */
+    margin-bottom: -2rem;
+    padding-left: 1rem;
+}
+
+
 .projects-header h1 {
     font-size: 6rem;
     font-weight: 700;
@@ -431,6 +431,17 @@ span {
     margin-bottom: -2rem;
     
 }
+
+.projects-header button {
+    font-size: 3.5rem;
+    line-height: 1.3;
+    background-color: #0b0f0b;
+    color: #c0cfb2;
+    padding-right: 2.5%;
+
+    
+}
+
 
 /* ── Card container ── */
 .projects .card-container {
@@ -525,7 +536,7 @@ video.lazy-video {
     padding: 10px;
     overflow: hidden;
     flex: 1;
-    font-size: 1.2rem;
+    font-size: 1rem;
     
     
 }
@@ -553,7 +564,19 @@ video.lazy-video {
     
     white-space: normal;
     box-sizing: border-box;
-    line-height: 1.6;
+    line-height: 1.3;
+    font-size: 1.1rem;
+    
+}
+
+.card-content ul {
+    margin-left: 1.2rem;
+    margin-top: 0.5rem;
+    color: #c0cfb2;
+    line-height: 2;
+
+    
+
 }
 
 .card-content span{

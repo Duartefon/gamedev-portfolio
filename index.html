@@ -45,14 +45,18 @@
             </div>
         </section>
 
+
+
+        
         <section id="projects" class="projects">
-            <div class="projects-header">
-                <h1><span>Projects</span></h1>
-            </div>
+        <div class="projects-header">
+            <button class="tab-button" onclick="openTab('Projects')">Projects</button>
+          <!--  <button class="tab-button" onclick="openTab('Mechanics')">Mechanics</button>
+            <button class="tab-button" onclick="openTab('Game Jams')">Jams</button>-->
+        </div>
 
-            
-
-            <div class="game-projects">
+      
+            <div class="display-section" id="Projects">
 
 
 
@@ -74,13 +78,17 @@
                         </div>
                         <div class="card-content">
                             <h1>Ego Fractum - VR</h1>
-                            <h2>Game Designer & Programmer </h2>
-                            <h3> My bachelor's final project graded 17/20. The player controls subject 44 and has to
-                                explore
-                                an abandoned facility and complete puzzles to unlock bits of the narrative. I
-                                implemented a
-                                lot of systems including the hand animation system, Enemy AI and more!
-                                <span>click me for details :]!</span>
+                            <h2>Game Programmer & Designer </h2>
+                            <h3> My bachelor's final project graded 17/20. A VIrtual Reality game where I Implemented the following systems:
+                                </h3>
+                               <ul>
+                                    <li> Enemy AI State Machine</li>
+                                    <li> Hand Animation System</li>
+                                    <li> Gameplay puzzles</li>
+                                </ul>
+                                
+                                <h3> You can learn more if you <span>click me :]!</span>
+                            </h3>
                             </h3>
                         </div>
                     </div>
@@ -126,13 +134,18 @@
                         </div>
                         <div class="card-content">
                             <h1>Zombie Meltdown</h1>
-                            <h2>Programmer</h2>
-                            <h3>This was a solo project for the game design course I took. I had to go through the
-                                entire
-                                process of developing a game: from the earliest stages of concept to implementation.
-                                It was required that I did a concept document, a Game Design Document and Playability
-                                Tests.
-                                <span>click me :]!</span>
+                            <h2>Game Programmer & Designer </h2>    
+                            <h3>Solo project for the game design course I took. The game is cod zombies x roguelike  but every interface is diegetic. 
+                                I implemented the following systems: </h3>
+                                <ul>
+                                    <li> Enemy AI Manager</li>
+                                    <li> Inverse-Kinematic based animation tool</li>
+                                    <li> Modular Weapon System</li>
+                                    <li> Wave-Based Game Manager</li>
+                                    <li> Player Controller</li>
+                                </ul>
+                                
+                                <h3> You can learn more if you <span>click me :]!</span>
                             </h3>
                         </div>
                     </div>
@@ -155,7 +168,7 @@
                         </div>
                         <div class="card-content">
                             <h1>Nature Strikes Back</h1>
-                            <h2>Game Programmer and Game Designer</h2>
+                            <h2>Technical Game Designer <h2>
                             <h3>This was a project for ISEL Game Studios where I helped design the gun's drop system and
                                 changed the project to the new Unity import system so that it could be played in
                                 handheld
@@ -181,11 +194,17 @@
                         </div>
                         <div class="card-content">
                             <h1>Space Game</h1>
-                            <h2>Programmer</h2>
-                            <h3>This was a project for university where I've implemented systems like Physics
-                                Simulation,
-                                Cellular Automota for map generation, Particle Systems, and much more.
-                                For a detailed explanation of the systems implemented you can <span>click me :]!</span>
+                            <h2>Game Programmer</h2>
+                            <h3>This is a solo university project where I, without a game engine, implemented: </h3>
+                            
+                            <ul> 
+                                    <li> Physics Simulation. </li>
+                                    <li> Cellular Automota for map generation. </li>
+                                    <li>  Particle Systems. </li>
+                                    <li>  Boid behaviors for enemy AI (flock, evade, attack) </li>
+                                </ul>
+
+                               <h3>  For a detailed explanation of the systems implemented you can <span>click me :]!</span>
                             </h3>
                         </div>
                     </div>
@@ -216,7 +235,7 @@
                                 <div class="card-content">
                     <h1>Masters in Digital Games Development - ULO</h1>
                     <h2> 1st Year  </h2>
-                    <h3>This is a international programme, exclusively taught in English, hands-on course that prepares students for work and research in global contexts within the games industry. The course covers the entire video game production pipeline, from concept to release. The programme has been distinguished as an Epic Games Unreal Academic Training Partner.
+                    <h3>This is an international programme, exclusively taught in English, hands-on course that prepares students for work and research in global contexts within the games industry. The course covers the entire video game production pipeline, from concept to release. The programme has been distinguished as an Epic Games Unreal Academic Training Partner.
         
                     </h3>
                 </div>
@@ -285,6 +304,15 @@
             }, { rootMargin: '100px' });
 
             lazyVideos.forEach(video => videoObserver.observe(video));
+
+
+
+            function openTab(tabName) {
+                document.querySelectorAll(".display-section").forEach(tab => {
+                    tab.style.display = "none";
+                });
+                document.getElementById(tabName).style.display = "grid"; 
+            } 
         </script>
 </body>
 
